@@ -91,10 +91,36 @@
 /** Usb HID report descriptor. */
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
-  /* USER CODE BEGIN 0 */
-  0x00,
-  /* USER CODE END 0 */
-  0xC0    /*     END_COLLECTION	             */
+	// 7
+    0x06, 0xFF, 0x00,	   /* USAGE_PAGE (Vendor Page: 0xFF00) */						
+    0x09, 0x01,			     /* USAGE (Demo Kit) 			  */	
+    0xa1, 0x01,			     /* COLLECTION (Application) 	  */	
+	 
+	// 21 * 2
+	0x85,0x01,           /* REPORT ID */
+	0x09,0x02,           /* USAGE */
+    0x15,0x00,           /* LOGICAL_MINIMUM(0)*/
+	0x26,0xff, 0x00,     /* LOGICAL_MAXIMUM(255)*/
+	0x75,0x08,           /* REPORT SIZE(8) 8BIT*/
+	0x95,0x3e,           /* REPORT COUNT(63) 8BIT*/
+	0xb1,0x82,           /* FEATURE(Data,Var,Abs,Vol)*/  
+	0x85,0x01,
+	0x09,0x02,
+	0x81,0x82,		     /* IN(Data,Var,Abs,Vol)*/  
+	
+	
+	0x85,0x02,           /* REPORT ID (3)*/
+	0x09,0x03,           /* USAGE (3)*/
+    0x15,0x00,           /* LOGICAL_MINIMUM(0)*/
+	0x26,0xff, 0x00,     /* LOGICAL_MAXIMUM(255)*/
+	0x75,0x08,           /* REPORT SIZE(8) 8BIT*/
+	0x95,0x63,           /* REPORT COUNT(63) 8BIT*/
+	0xb1,0x82,           /* FEATURE(Data,Var,Abs,Vol)*/  
+	0x85,0x02,
+	0x09,0x03,
+	0x91,0x82,			 /* OUT(Data,Var,Abs,Vol)*/ 
+	
+	0xc0,
 };
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
@@ -125,7 +151,7 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 
 static int8_t CUSTOM_HID_Init_FS(void);
 static int8_t CUSTOM_HID_DeInit_FS(void);
-static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state);
+static int8_t CUSTOM_HID_OutEvent_FS(uint8_t *p_report_buff);
 
 /**
   * @}
@@ -174,7 +200,7 @@ static int8_t CUSTOM_HID_DeInit_FS(void)
   * @param  state: Event state
   * @retval USBD_OK if all operations are OK else USBD_FAIL
   */
-static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
+static int8_t CUSTOM_HID_OutEvent_FS(uint8_t *p_report_buff)
 {
   /* USER CODE BEGIN 6 */
   return (USBD_OK);
