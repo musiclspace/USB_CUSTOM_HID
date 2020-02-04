@@ -22,6 +22,7 @@
 #include "main.h"
 #include "usb_device.h"
 #include "user_dfu.h"
+#include "user_custom_hid.h"
 #include "user_log.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -44,7 +45,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
-
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -66,6 +66,8 @@ static void MX_USART2_UART_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+  
+  uint8_t txdata[64] = {0x01};
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -97,14 +99,14 @@ int main(void)
   pr_info("USB CUSTOM HID Start ...");
   /* USER CODE END 2 */
  
- 
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-
+    user_custom_hid_send(txdata);
+    HAL_Delay(10);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

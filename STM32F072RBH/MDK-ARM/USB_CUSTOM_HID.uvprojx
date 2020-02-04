@@ -592,6 +592,11 @@
               <FileType>1</FileType>
               <FilePath>..\STM32_UserLib\core\user_dfu.c</FilePath>
             </File>
+            <File>
+              <FileName>user_custom_hid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\STM32_UserLib\core\user_custom_hid.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
