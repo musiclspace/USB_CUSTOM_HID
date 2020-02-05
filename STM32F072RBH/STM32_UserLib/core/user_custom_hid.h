@@ -19,7 +19,7 @@ void user_custom_hid_send(uint8_t *pdata);
 void user_custom_hid_outevent_callback(uint8_t *pdata);
 
 #define HID_DESC_IN  0x81
-#define HID_DESC_OUT 0x85
+#define HID_DESC_OUT 0x91
 
 #define CUSTOM_HID_ReportDesc_Module(ReportID, Direction) 0x85,ReportID,   /* REPORT ID */          \
                                                           0x09,ReportID+1, /* USAGE */              \
