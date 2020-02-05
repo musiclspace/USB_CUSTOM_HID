@@ -21,7 +21,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_custom_hid_if.h"
-
+#include "user_custom_hid.h"
 /* USER CODE BEGIN INCLUDE */
 
 /* USER CODE END INCLUDE */
@@ -92,34 +92,14 @@
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
 	// 7
-    0x06, 0xFF, 0x00,	   /* USAGE_PAGE (Vendor Page: 0xFF00) */						
-    0x09, 0x01,			     /* USAGE (Demo Kit) 			  */	
-    0xa1, 0x01,			     /* COLLECTION (Application) 	  */	
-	 
-	// 21 * 2
-	0x85,0x01,           /* REPORT ID */
-	0x09,0x02,           /* USAGE */
-    0x15,0x00,           /* LOGICAL_MINIMUM(0)*/
-	0x26,0xff, 0x00,     /* LOGICAL_MAXIMUM(255)*/
-	0x75,0x08,           /* REPORT SIZE(8) 8BIT*/
-	0x95,0x3e,           /* REPORT COUNT(63) 8BIT*/
-	0xb1,0x82,           /* FEATURE(Data,Var,Abs,Vol)*/  
-	0x85,0x01,
-	0x09,0x02,
-	0x81,0x82,		     /* IN(Data,Var,Abs,Vol)*/  
-	
-	
-	0x85,0x02,           /* REPORT ID (3)*/
-	0x09,0x03,           /* USAGE (3)*/
-    0x15,0x00,           /* LOGICAL_MINIMUM(0)*/
-	0x26,0xff, 0x00,     /* LOGICAL_MAXIMUM(255)*/
-	0x75,0x08,           /* REPORT SIZE(8) 8BIT*/
-	0x95,0x63,           /* REPORT COUNT(63) 8BIT*/
-	0xb1,0x82,           /* FEATURE(Data,Var,Abs,Vol)*/  
-	0x85,0x02,
-	0x09,0x03,
-	0x91,0x82,			 /* OUT(Data,Var,Abs,Vol)*/ 
-	
+  0x06, 0xFF, 0x00,	   /* USAGE_PAGE (Vendor Page: 0xFF00) */						
+  0x09, 0x01,			     /* USAGE (Demo Kit) 			  */	
+  0xa1, 0x01,			     /* COLLECTION (Application) 	  */	
+
+  CUSTOM_HID_ReportDesc_Module(0x01,HID_DESC_IN),
+  CUSTOM_HID_ReportDesc_Module(0x02,HID_DESC_OUT),
+
+
 	0xc0,
 };
 
@@ -203,6 +183,7 @@ static int8_t CUSTOM_HID_DeInit_FS(void)
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t *p_report_buff)
 {
   /* USER CODE BEGIN 6 */
+  user_custom_hid_outevent_callback(p_report_buff);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
